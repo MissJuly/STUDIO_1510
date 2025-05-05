@@ -1,11 +1,18 @@
-import React from "react";
+import React from 'react';
+import './HeroSection.css';
+import heroBG from '../assets/hero-bg.jpg'
 
-const HeroSection = () => {
+function HeroSection() {
   return (
-    <section className="bg-blue-500 text-white h-screen flex items-center justify-center">
-      <h1 className="text-5xl font-bold">Welcome to Our Architectural Website</h1>
-    </section>
+    <div className="hero-section" style={{ backgroundImage: `url(${heroBG})` }}>
+      <div className="overlay">
+        <h1>Humans spend nearly 90% of their lives indoors, making design of our built environment not just a luxury, but a fundamental part of our well-being, productivity and happiness.
+        </h1>
+        <button className="hero-button">START YOUR PROJECT</button>
+      </div>
+    </div>
   );
-};
+}
 
 export default HeroSection;
+
