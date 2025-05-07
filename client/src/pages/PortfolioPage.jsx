@@ -23,7 +23,7 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fadeIn">
               {[1, 2, 3, 4].map((item) => (
                 <div key={item} className="bg-gray-200 h-48 flex items-center justify-center text-gray-500 text-sm rounded-lg shadow-sm">
-                  Coming Soon { /* <img src="/your-image.jpg" alt="Project Name" className="object-cover w-full h-full rounded-lg" /> */}
+                  Coming Soon { /* <img src="/image.jpg" alt="Project Name" className="object-cover w-full h-full rounded-lg" /> */}
                 </div>
               ))}
             </div>
@@ -34,7 +34,7 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fadeIn">
               {[1, 2, 3, 4].map((item) => (
                 <div key={item} className="bg-gray-200 h-48 flex items-center justify-center text-gray-500 text-sm rounded-lg shadow-sm">
-                  Coming Soon { /* <img src="/your-image.jpg" alt="Project Name" className="object-cover w-full h-full rounded-lg" /> */}
+                  Coming Soon { /* <img src="/image.jpg" alt="Project Name" className="object-cover w-full h-full rounded-lg" /> */}
                 </div>
               ))}
             </div>
