@@ -21,9 +21,6 @@ function ContactPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // For now just show confirmation (we’ll wire backend later)
-    console.log('Form submitted:', formData);
-
     // Clear form + show message
     setFormData({ name: '', email: '', subject: '', message: '' });
     setSubmitted(true);
