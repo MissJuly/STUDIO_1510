@@ -1,25 +1,32 @@
-import React from "react";
-import NavigationMenu from "./components/NavigationMenu";
-import HeroSection from './components/HeroSection'
-import AboutSection from "./components/AboutSection";
-import ImageSlider from "./components/ImageSlider";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NavigationMenu from './components/NavigationMenu';
+import ContactInfo  from './components/ContactInfo'
 
-const sampleImages = [
-  'https://via.placeholder.com/600x400?text=Image+1',
-  'https://via.placeholder.com/600x400?text=Image+2',
-  'https://via.placeholder.com/600x400?text=Image+3',
-];
+
+
+
+import HomePage from './pages/HomePage';
+// import AboutPage from './pages/AboutPage';
+// import PortfolioPage from './pages/PortfolioPage';
+// import ShopPage from './pages/ShopPage';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
-    <div className="bg-[#f5f5f5] min-h-screen">
+    <Router>
       <NavigationMenu />
-      <HeroSection />
-      <AboutSection />
-      <ImageSlider images={sampleImages} />
-    </div>
+
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/about" element={<AboutPage />} /> */}
+        {/* <Route path="/portfolio" element={<PortfolioPage />} /> */}
+        {/* <Route path="/shop" element={<ShopPage />} /> */}
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
+      <ContactInfo />
+    </Router>
   );
 }
 
 export default App;
-

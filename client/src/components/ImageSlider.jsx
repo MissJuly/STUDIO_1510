@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
-// Your 4 images
+// Slideshow 4 images
 import img1 from '../assets/slide1.jpg';
 import img2 from '../assets/slide2.jpg';
 import img3 from '../assets/slide3.jpg';
@@ -44,7 +44,7 @@ const ImageSlider = () => {
       >
         {[img1, img2, img3, img4].map((img, index) => (
           <SwiperSlide key={index}>
-            <img src={img} alt={`Slide ${index + 1}`} className="w-full h-[400px] object-cover rounded-lg" />
+            <img src={img} alt={`Slide ${index + 1}`} className="w-full h-[400px] object-cover" />
           </SwiperSlide>
         ))}
       </Swiper>

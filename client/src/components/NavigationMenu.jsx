@@ -1,18 +1,23 @@
+import { Link } from 'react-router-dom';
 import { useState } from "react";
 import { X, Menu, Instagram, Linkedin } from "lucide-react";
 import logo from "../assets/logo.png";
 
-const NavigationMenu = () => {
+function NavigationMenu() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
       {/* Fixed Navbar Container */}
       <div className="fixed top-0 left-0 w-full bg-[#f5f5f5] flex items-center justify-between h-20 px-10 shadow-md z-50">
         {/* Logo */}
-        <a href="#">
-        <img src={logo} alt="Logo" className="h-28 w-auto" />
-        </a>
+        <Link to="/" onClick={() => setIsOpen(false)}>
+          <img src={logo} alt="Logo" className="h-28 w-auto" />
+        </Link>
         {/* Open Menu Button */}
         {!isOpen && (
           <button
@@ -48,21 +53,11 @@ const NavigationMenu = () => {
 
         {/* Navigation Links */}
         <nav className="flex flex-col items-center gap-8 text-3xl font-normal text-[#bbbbbb]">
-          <a href="#" className="hover:text-[#333333] transition duration-200">
-            Home
-          </a>
-          <a href="#" className="hover:text-[#333333] transition duration-200">
-            Portfolio
-          </a>
-          <a href="#" className="hover:text-[#333333] transition duration-200">
-            Shop
-          </a>
-          <a href="#about" className="hover:text-[#333333] transition duration-200">
-            About
-          </a>
-          <a href="#" className="hover:text-[#333333] transition duration-200">
-            Contacts
-          </a>
+          <Link to="/" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Home</Link>
+          <Link to="/portfolio" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Portfolio</Link>
+          <Link to="/shop" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Shop</Link>
+          <Link to="/about" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">About</Link>
+          <Link to="/contact" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Contact Us</Link>
         </nav>
 
         {/* Social Media Icons */}
@@ -77,6 +72,5 @@ const NavigationMenu = () => {
       </div>
     </>
   );
-};
-
+}
 export default NavigationMenu;
