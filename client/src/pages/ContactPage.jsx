@@ -1,5 +1,3 @@
-// pages/ContactPage.jsx
-
 import { useState } from 'react';
 
 function ContactPage() {
