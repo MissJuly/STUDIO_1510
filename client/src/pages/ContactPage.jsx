@@ -1,5 +1,3 @@
-// pages/ContactPage.jsx
-
 import { useState } from 'react';
 
 function ContactPage() {
@@ -30,81 +28,86 @@ function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] px-6 py-20">
-      <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-10">
-        <h1 className="text-4xl font-semibold text-[#333333] mb-6 text-center">
-          Contact Us
-        </h1>
-        <p className="text-[#333333] text-center mb-8 text-lg">
-          We’d love to hear from you. Send us an enquiry below.
-        </p>
+    <div className="min-h-screen flex flex-col bg-[#f5f5f5]">
+      <main className="flex-grow flex items-center justify-center mt-10 px-6 py-20">
+        <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-10">
+          <h1 className="text-4xl font-semibold text-[#333333] mb-6 text-center">
+            Contact Us
+          </h1>
+          <p className="text-[#333333] text-center mb-8 text-lg">
+            We’d love to hear from you. Send us an enquiry below.
+          </p>
 
-        {submitted && (
-          <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-xl text-center">
-            Thank you! Your enquiry has been sent successfully.
-          </div>
-        )}
+          {submitted && (
+            <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-xl text-center">
+              Thank you! Your enquiry has been sent successfully.
+            </div>
+          )}
 
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-[#333333] mb-2">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your Name"
-              className="w-full border border-[#bbbbbb] rounded-xl p-3 focus:outline-none focus:border-[#333333]"
-              required
-            />
-          </div>
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-[#333333] mb-2">Full Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                className="w-full border border-[#bbbbbb] rounded-xl p-3 focus:outline-none focus:border-[#333333]"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-[#333333] mb-2">Email Address</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your@email.com"
-              className="w-full border border-[#bbbbbb] rounded-xl p-3 focus:outline-none focus:border-[#333333]"
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-[#333333] mb-2">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="your@email.com"
+                className="w-full border border-[#bbbbbb] rounded-xl p-3 focus:outline-none focus:border-[#333333]"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-[#333333] mb-2">Subject</label>
-            <input
-              type="text"
-              name="subject"
-              value={formData.subject}
-              onChange={handleChange}
-              placeholder="Subject of enquiry"
-              className="w-full border border-[#bbbbbb] rounded-xl p-3 focus:outline-none focus:border-[#333333]"
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-[#333333] mb-2">Subject</label>
+              <input
+                type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                placeholder="Subject of enquiry"
+                className="w-full border border-[#bbbbbb] rounded-xl p-3 focus:outline-none focus:border-[#333333]"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-[#333333] mb-2">Message</label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Write your message here..."
-              className="w-full border border-[#bbbbbb] rounded-xl p-3 h-32 focus:outline-none focus:border-[#333333]"
-              required
-            ></textarea>
-          </div>
+            <div>
+              <label className="block text-[#333333] mb-2">Message</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Write your message here..."
+                className="w-full border border-[#bbbbbb] rounded-xl p-3 h-32 focus:outline-none focus:border-[#333333]"
+                required
+              ></textarea>
+            </div>
 
-          <button
-            type="submit"
-            className="w-full bg-[#333333] text-white rounded-xl py-3 text-lg hover:bg-[#555555] transition duration-200"
-          >
-            Send Enquiry
-          </button>
-        </form>
-      </div>
+            <button
+              type="submit"
+              className="w-full bg-[#333333] text-white rounded-xl py-3 text-lg hover:bg-[#555555] transition duration-200"
+            >
+              Send Enquiry
+            </button>
+          </form>
+        </div>
+      </main>
+      <footer className="text-center text-sm text-gray-500 py-4">
+          <p>Studio 1510 — Designing spaces that inspire.</p>
+      </footer>
     </div>
   );
 }

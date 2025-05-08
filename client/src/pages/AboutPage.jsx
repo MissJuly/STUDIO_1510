@@ -67,7 +67,7 @@ export default function AboutPage() {
         </main>
 
         <footer className="text-center text-sm text-gray-500 pb-4">
-          <p>Studio 1510 — Designing spaces that inspire, since 2024.</p>
+          <p>Studio 1510 — Designing spaces that inspire.</p>
         </footer>
       </div>
     );
