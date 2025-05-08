@@ -9,7 +9,7 @@ export default function ContactInfo() {
           {/* Email */}
           <div className="flex flex-col space-y-20">
             <p className="font-medium text-base text-gray-800">Email</p>
-            <a href="mailto:studio1510@gmail.com" className="text-gray-600 hover:text-gray-900 break-words">studio1510@gmail.com</a>
+            <a href="mailto:hellostudio1510@gmail.com" className="text-gray-600 hover:text-gray-900 break-words">hellostudio1510@gmail.com</a>
           </div>
 
           {/* Phone */}
