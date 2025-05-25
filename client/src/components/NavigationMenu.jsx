@@ -13,7 +13,7 @@ function NavigationMenu() {
   return (
     <>
       {/* Fixed Navbar Container */}
-      <div className="fixed top-0 left-0 w-full bg-[#f5f5f5] flex items-center justify-between h-20 px-10 shadow-md z-50">
+      <div className="fixed top-0 left-0 w-full bg-[#f5f5f5] flex items-center justify-between h-20 px-10 shadow-md z-30">
         {/* Logo */}
         <Link to="/" onClick={() => setIsOpen(false)}>
           <img src={logo} alt="Logo" className="h-28 w-auto" />
@@ -62,12 +62,12 @@ function NavigationMenu() {
 
         {/* Social Media Icons */}
         <div className="flex justify-center gap-6 mt-14">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/knlws_/" target="_blank" rel="noopener noreferrer">
             <Instagram size={30} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200" />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          {/* <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
             <Linkedin size={30} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200" />
-          </a>
+          </a> */}
         </div>
       </div>
     </>

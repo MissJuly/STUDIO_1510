@@ -10,8 +10,10 @@
     "lucide-react": "^0.483.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-medium-image-zoom": "^5.2.14",
     "react-router-dom": "^7.5.3",
     "react-scripts": "5.0.1",
+    "sonner": "^2.0.3",
     "swiper": "^11.2.6",
     "web-vitals": "^2.1.4"
   },

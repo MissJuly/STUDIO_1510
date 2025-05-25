@@ -1,13 +1,15 @@
+import NavigationMenu from '../components/NavigationMenu';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
-function ContactPage() {
+export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -16,21 +18,55 @@ function ContactPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    // Clear form + show message
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    setSubmitted(true);
+    try {
+      const response = await fetch('http://localhost:8000/api/contact-us/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Hide confirmation after 5 sec
-    setTimeout(() => setSubmitted(false), 5000);
+      if (!response.ok) {
+        throw new Error('Something went wrong. Please try again.');
+      }
+
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      toast.success('Your enquiry has been sent successfully!');
+    } catch (error) {
+      toast.error(error.message || 'Failed to send enquiry.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f5f5]">
+       <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fadeIn {
+            animation: fadeIn 0.8s ease-out forwards;
+          }
+          input, textarea, select {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+          }
+          input:focus, textarea:focus, select:focus {
+            border-color: #333333;
+            box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.2);
+            outline: none;
+          }
+        `}</style>
+      <NavigationMenu />
       <main className="flex-grow flex items-center justify-center mt-10 px-6 py-20">
-        <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-10">
+        <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-10 animate-fadeIn">
           <h1 className="text-4xl font-semibold text-[#333333] mb-6 text-center">
             Contact Us
           </h1>
@@ -38,11 +74,6 @@ function ContactPage() {
             We’d love to hear from you. Send us an enquiry below.
           </p>
 
-          {submitted && (
-            <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-xl text-center">
-              Thank you! Your enquiry has been sent successfully.
-            </div>
-          )}
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
@@ -95,13 +126,13 @@ function ContactPage() {
                 required
               ></textarea>
             </div>
-
-            <button
-              type="submit"
-              className="w-full bg-[#333333] text-white rounded-xl py-3 text-lg hover:bg-[#555555] transition duration-200"
-            >
-              Send Enquiry
-            </button>
+             <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#333333] text-white rounded-xl py-3 text-lg hover:bg-[#555555] transition duration-200 disabled:opacity-50"
+              >
+                {isSubmitting ? 'Sending...' : 'Send Enquiry'}
+              </button>
           </form>
         </div>
       </main>
@@ -112,4 +143,4 @@ function ContactPage() {
   );
 }
 
-export default ContactPage;
+

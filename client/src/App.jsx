@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NavigationMenu from './components/NavigationMenu';
-
-
+import { Toaster } from 'sonner';
 import HomePage from './pages/HomePage';
 import ProjectPage from './pages/ProjectPage';
 import AboutPage from './pages/AboutPage';
@@ -12,7 +10,22 @@ import ContactPage from './pages/ContactPage';
 function App() {
   return (
     <Router>
-      <NavigationMenu />
+     <Toaster
+        position="top-center"
+        visibleToasts={1}
+        richColors={false}
+        toastOptions={{
+          style: {
+            background: '#ffffff',
+            color: '#333333',
+            border: '1px solid #dddddd',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+            padding: '12px 16px',
+            fontSize: '14px',
+          },
+        }}
+      />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/project" element={<ProjectPage />} />
