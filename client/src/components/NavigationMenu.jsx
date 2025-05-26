@@ -1,13 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { X, Menu, Instagram, Linkedin } from "lucide-react";
 import logo from "../assets/logo.png";
 
 function NavigationMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
 
   const closeSidebar = () => {
     setIsOpen(false);
+  };
+
+  const handleNavClick = (path) => {
+    closeSidebar(); // close the menu first
+    if (location.pathname === path) {
+      window.location.reload(); // if same page, reload it
+    } else {
+      navigate(path); // if different page, navigate normally
+    }
   };
 
   return (
@@ -15,9 +28,20 @@ function NavigationMenu() {
       {/* Fixed Navbar Container */}
       <div className="fixed top-0 left-0 w-full bg-[#f5f5f5] flex items-center justify-between h-20 px-10 shadow-md z-30">
         {/* Logo */}
-        <Link to="/" onClick={() => setIsOpen(false)}>
+        <button
+          onClick={() => {
+            closeSidebar();
+            if (location.pathname === "/") {
+              window.scrollTo({ top: 0, behavior: "auto" }); 
+              window.location.reload();
+            } else {
+              navigate("/");
+            }
+          }}
+          className="focus:outline-none"
+        >
           <img src={logo} alt="Logo" className="h-28 w-auto" />
-        </Link>
+        </button>
         {/* Open Menu Button */}
         {!isOpen && (
           <button
@@ -52,13 +76,13 @@ function NavigationMenu() {
         </button>
 
         {/* Navigation Links */}
-        <nav className="flex flex-col items-center gap-8 text-3xl font-normal text-[#bbbbbb]">
-          <Link to="/" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Home</Link>
-          <Link to="/portfolio" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Portfolio</Link>
-          <Link to="/shop" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Shop</Link>
-          <Link to="/about" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">About</Link>
-          <Link to="/contact" onClick={closeSidebar} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Contact Us</Link>
-        </nav>
+      <nav className="flex flex-col items-center gap-8 text-3xl font-normal text-[#bbbbbb]">
+        <button onClick={() => handleNavClick("/")} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Home</button>
+        <button onClick={() => handleNavClick("/about")} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">About</button>
+        <button onClick={() => handleNavClick("/portfolio")} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Portfolio</button>
+        <button onClick={() => handleNavClick("/shop")} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Shop</button>
+        <button onClick={() => handleNavClick("/contact")} className="text-[#bbbbbb] hover:text-[#333333] transition duration-200">Contact Us</button>
+      </nav>
 
         {/* Social Media Icons */}
         <div className="flex justify-center gap-6 mt-14">

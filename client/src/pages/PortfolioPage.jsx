@@ -1,4 +1,5 @@
 import NavigationMenu from '../components/NavigationMenu';
+import FadeInWrapper from '../components/FadeInWrapper';
 import React, { useState, useEffect } from 'react';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -41,18 +42,9 @@ export default function PortfolioPage() {
 
   return (
     <div className="bg-[#f5f5f5] min-h-screen text-[#333333]">
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-      `}</style>
-      <NavigationMenu />
+     <NavigationMenu />
      <main className="flex-grow">
-        <div className="max-w-5xl mx-auto px-6 py-16">
+        <FadeInWrapper className="max-w-5xl mx-auto px-6 py-16 ">
           <h1 className="text-4xl font-semibold text-center mt-10 mb-8">Our Portfolio</h1>
           <p className="text-lg text-center mb-12 leading-loose">
             A curated selection of architectural and interior design projects that reflect our commitment to timeless, functional, and inspiring spaces.
@@ -78,11 +70,10 @@ export default function PortfolioPage() {
               </div>
             ))}
           </div>
-        </div>
+        </FadeInWrapper>
       </main>
         {isModalOpen && selectedProject && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-y-auto">
-            {/* NEW WRAPPER for centering & spacing */}
             <div className="min-h-screen flex items-center justify-center py-10 px-4">
               <div className="bg-white rounded-lg shadow-lg p-6 max-w-5xl w-full mx-4 flex flex-col md:flex-row md:items-start gap-6 relative">
 

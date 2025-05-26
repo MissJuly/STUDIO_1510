@@ -1,12 +1,13 @@
 import NavigationMenu from "../components/NavigationMenu";
-import kenImage from "../assets/ken.jpg"; // Adjust the path as needed
+import FadeInWrapper from "../components/FadeInWrapper";
+import kenImage from "../assets/ken.jpg";
 
 export default function AboutPage() {
   return (
     <div className="bg-[#f5f5f5] min-h-screen flex flex-col text-[#333333]">
       <NavigationMenu />
       <main className="flex-grow">
-        <div className="max-w-5xl mx-auto px-6 py-16">
+        <FadeInWrapper className="max-w-5xl mx-auto px-6 py-16">
           <h1 className="text-4xl font-semibold text-center mt-10 mb-12">
             About Studio 1510
           </h1>
@@ -30,7 +31,7 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-        </div>
+        </FadeInWrapper>
       </main>
 
       <footer className="text-center text-sm text-gray-500 pb-4">

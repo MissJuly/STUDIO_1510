@@ -3,6 +3,7 @@ import { ShoppingCart } from "lucide-react";
 import { toast } from 'sonner';
 import { fetchCart, addToCart, removeFromCart, clearCart } from '../api/cartApi';
 import NavigationMenu from '../components/NavigationMenu';
+import FadeInWrapper from '../components/FadeInWrapper';
 
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -240,27 +241,9 @@ const handleAdd = (product) => {
 
   return (
     <div className="bg-[#f5f5f5] min-h-screen text-[#333333]">
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeOut {
-          from { opacity: 1; transform: translateY(0); }
-          to { opacity: 0; transform: translateY(20px); }
-        }
-        .animate-modal-in {
-          animation: fadeIn 0.4s ease-out forwards;
-        }
-        .animate-modal-out {
-          animation: fadeOut 0.4s ease-out forwards;
-        }
-      `}</style>
-
       <NavigationMenu />
-
       <main className="flex-grow">
-        <div className="max-w-5xl mx-auto px-6 py-16">
+        <FadeInWrapper className="max-w-5xl mx-auto px-6 py-16">
           <h1 className="text-4xl font-semibold text-center mt-10 mb-8">Studio 1510 Shop</h1>
 
           <div className="flex justify-end mb-4">
@@ -342,7 +325,7 @@ const handleAdd = (product) => {
                 ))}
             </div>
           </div>
-        </div>
+        </FadeInWrapper>
       </main>
 
       <div className="text-center text-sm text-gray-500 pb-4">

@@ -1,4 +1,5 @@
 import NavigationMenu from "../components/NavigationMenu";
+import FadeInWrapper from "../components/FadeInWrapper";
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -52,26 +53,9 @@ export default function ProjectPage() {
 
     return (
       <div className="bg-[#f5f5f5] min-h-screen text-[#333333]">
-        <style>{`
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fadeIn {
-            animation: fadeIn 0.8s ease-out forwards;
-          }
-          input, textarea, select {
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-          }
-          input:focus, textarea:focus, select:focus {
-            border-color: #333333;
-            box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.2);
-            outline: none;
-          }
-        `}</style>
         <NavigationMenu />
         <main className="flex-grow">
-          <div className="max-w-3xl mx-auto px-6 py-16 animate-fadeIn">
+          <FadeInWrapper className="max-w-3xl mx-auto px-6 py-16">
             <h1 className="text-4xl font-semibold text-center mt-10 mb-8">Start Your Project</h1>
             <p className="text-lg text-center mb-12 leading-loose">
               Ready to bring your vision to life? We’d love to hear about your project. Share your ideas, aspirations, and requirements — and we will get in touch to explore how we can collaborate.
@@ -170,7 +154,7 @@ export default function ProjectPage() {
               </form>
             </>
                     {/* End of form */}
-          </div>
+          </FadeInWrapper>
         </main>
 
         <div className="text-center text-sm text-gray-500 pb-4">

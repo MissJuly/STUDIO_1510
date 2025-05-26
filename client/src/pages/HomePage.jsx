@@ -1,5 +1,6 @@
 import React from "react";
 import NavigationMenu from "../components/NavigationMenu";
+import FadeInWrapper from "../components/FadeInWrapper";
 import HeroSection from '../components/HeroSection';
 import AboutSection from "../components/AboutSection";
 import ImageSlider from "../components/ImageSlider";
@@ -11,11 +12,13 @@ function HomePage() {
     return (
       <div  className="bg-[#f5f5f5] min-h-screen">
         <NavigationMenu />
-        <HeroSection />
-        <AboutSection />
-        <ImageSlider />
-        <OurServices />
-        <ContactInfo />
+        <FadeInWrapper>
+          <HeroSection />
+          <AboutSection />
+          <ImageSlider />
+          <OurServices />
+          <ContactInfo />
+        </FadeInWrapper>
       </div>
     );
   }
