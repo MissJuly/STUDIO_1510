@@ -22,7 +22,7 @@ export default function ContactInfo() {
           <div className="flex flex-col space-y-20">
             <p className="font-medium text-base text-gray-800">Social Links</p>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/knlws_/" target="_blank" rel="noreferrer" className="text-gray-500 hover:text-gray-900">
+              <a href="https://www.instagram.com/studiofifteenten/" target="_blank" rel="noreferrer" className="text-gray-500 hover:text-gray-900">
                 <Instagram className="w-6 h-6" />
               </a>
               {/* <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-gray-500 hover:text-gray-900">

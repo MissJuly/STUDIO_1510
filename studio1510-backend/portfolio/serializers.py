@@ -3,7 +3,7 @@ from .models import Project, Product, NotifyRequest, Cart, CartItem, Order, Orde
 
 class ProjectImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
-    
+
     class Meta:
         model = ProjectImage
         fields = ['image']
@@ -69,26 +69,15 @@ class CartSerializer(serializers.ModelSerializer):
 
         return instance
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    product_name = serializers.CharField(source='product.name', read_only=True)
-    price = serializers.DecimalField(source='product.price', max_digits=10, decimal_places=2, read_only=True)
 
+class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ['id', 'product', 'product_name', 'quantity', 'price']
-
-
+        fields = ['product_name', 'quantity', 'price']
 
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True)
+    items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order
-        fields = ['id', 'customer_name', 'created_at', 'items']
-
-    def create(self, validated_data):
-        items_data = validated_data.pop('items')
-        order = Order.objects.create(**validated_data)
-        for item_data in items_data:
-            OrderItem.objects.create(order=order, **item_data)
-        return order
+        fields = ['id', 'customer_name', 'customer_email', 'customer_phone', 'created_at', 'items']

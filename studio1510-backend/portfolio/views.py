@@ -43,7 +43,7 @@ def get_or_create_cart(request):
     # Make sure the session has a session_key
     if not request.session.session_key:
         request.session.create()
-        cart.tems.count()
+        # cart.items.count()
 
     session_key = request.session.session_key
 
@@ -185,7 +185,70 @@ class CheckoutView(APIView):
             'total': sum([item['quantity'] * Product.objects.get(id=item['product_id']).price for item in items])
         }, status=status.HTTP_200_OK)
 
+# Order Submission view
+class SubmitOrderView(APIView):
+    def post(self, request):
+        data = request.data
+        customer_name = data.get('customer_name')
+        customer_email = data.get('customer_email')
+        customer_phone = data.get('customer_phone')
+        items = data.get('items', [])
 
+        if not customer_name or not customer_phone or not customer_email or not items:
+            return Response({'error': 'Missing fields'}, status=400)
+
+        order = Order.objects.create(
+            customer_name=customer_name,
+            customer_email=customer_email,
+            customer_phone=customer_phone
+        )
+
+        item_list_lines = []
+
+        for item in items:
+            product = get_object_or_404(Product, id=item['product_id'])
+
+            # Create OrderItem using fields compatible with your model
+            OrderItem.objects.create(
+                order=order,
+                product_name=product.name,
+                quantity=item['quantity'],
+                price=product.price
+            )
+
+        item_list = "\n".join(
+            f"{item['quantity']} x {Product.objects.get(id=item['product_id']).name} - Ksh{Product.objects.get(id=item['product_id']).price:.2f}"
+            for item in items
+        )
+        subject = f"🛒 New Order Received"
+        message = f"🧾 New Order Details:\n\n" \
+                  f"📦 New Order from {customer_name}\n" \
+                  f"Email: {customer_email}\n" \
+                  f"Phone: {customer_phone}\n\n" \
+                  f"Items Ordered:\n{item_list}\n\n" \
+                  f"Studio 1510!"
+
+        # Email to owner
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.DEFAULT_FROM_EMAIL],
+        )
+
+         # Confirmation email to customer
+        send_mail(
+            "Order Confirmation - Studio 1510",
+            f"Hi {customer_name},\n\nWe’ve received your order:\n\n{item_list}\n\nWe’ll be in touch soon.\n\n-Thank you for using Studio 1510!",
+            settings.DEFAULT_FROM_EMAIL,
+            [customer_email],
+        )
+
+        # Clear cart items after order
+        cart = get_or_create_cart(request)
+        cart.items.all().delete()
+
+        return Response({'message': 'Order placed successfully'}, status=200)
 
 # Project Inquiry view
 @method_decorator(csrf_exempt, name='dispatch') # replace with CSRF token later

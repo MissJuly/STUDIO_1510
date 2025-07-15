@@ -27,7 +27,7 @@ export default function AboutPage() {
                 Founded by <strong>Kenlewis Ndirangu Nderitu</strong> — or simply <strong>Ken</strong>, an architectural designer, with half a decade of experience, passionate about creating meaningful spaces that blend functionality with soul.
               </p>
               <p>
-                Based in Nairobi, I work across residential, commercial and institutional projects, guided by an idea-driven + collaborative design process resulting in work that celebrates fine craftsmanship + detail.
+                Based in Nairobi, We work across residential, commercial and institutional projects, guided by an idea-driven + collaborative design process resulting in work that celebrates fine craftsmanship + detail.
               </p>
             </div>
           </div>

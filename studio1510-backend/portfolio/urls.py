@@ -11,7 +11,8 @@ from .views import (
     OrderCreateView,
     CheckoutView,
     StartProjectView,
-    ContactUsView
+    ContactUsView,
+    SubmitOrderView
 )
 
 router = DefaultRouter()
@@ -19,9 +20,7 @@ router.register('projects', ProjectViewSet, basename='project')
 router.register('products', ProductViewSet, basename='product')
 
 urlpatterns = [
-    path('', include(router.urls)),
-
-
+    path('', include(router.urls)),                                          
 
     # Cart endpoints
     path('cart/', CartView.as_view(), name='cart-detail'),
@@ -37,6 +36,9 @@ urlpatterns = [
 
     # Checkout
     path('checkout/', CheckoutView.as_view(), name='checkout'),
+
+    # Submit-Order
+    path('submit-order/', SubmitOrderView.as_view(), name='submit-order'),
 
     # StartProject
     path('start-project/', StartProjectView.as_view(), name='start_project_submission'),

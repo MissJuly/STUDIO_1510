@@ -15,8 +15,12 @@ export default function ShopPage() {
   const [modalAnimatingOut, setModalAnimatingOut] = useState(false);
   const [email, setEmail] = useState('');
   const [productId, setProductId] = useState(null);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
-  const [checkoutError, setCheckoutError] = useState(null);
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const [customerName, setCustomerName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [orderSubmitting, setOrderSubmitting] = useState(false);
+
 
   const showToast = (message, type = 'default') => {
     const options = { duration: 2500 };
@@ -183,7 +187,7 @@ const handleAdd = (product) => {
         })
         .catch(() => showToast(`Failed to reduce quantity`, 'error'));
     } else {
-      handleRemove(item.product.id); // now returns a properly awaited function
+      handleRemove(item.product.id);
     }
   }
 
@@ -195,21 +199,24 @@ const handleAdd = (product) => {
     }
   }, [cartVisible]);
 
-   const handleCheckout = async () => {
-    if (!cart.items || cart.items.length === 0) {
-      showToast('Your cart is empty', 'warning');
+
+  const handlePlaceOrder = async () => {
+    if (!customerName || !customerEmail || !customerPhone) {
+      showToast('Please fill in all fields', 'warning');
       return;
     }
 
-    setCheckoutLoading(true);
-    setCheckoutError(null);
+    setOrderSubmitting(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/checkout/', {
+      const response = await fetch('http://127.0.0.1:8000/api/submit-order/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Ensure session consistency
+        credentials: 'include',
         body: JSON.stringify({
+          customer_name: customerName,
+          customer_email: customerEmail,
+          customer_phone: customerPhone,
           items: cart.items.map(item => ({
             product_id: item.product.id,
             quantity: item.quantity,
@@ -218,23 +225,22 @@ const handleAdd = (product) => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        showToast('Checkout successful! Order ID: ' + data.order_id, 'success');
-        closeCart();
-
-        // Force fetch the cart after successful checkout
+        toast.success('Order submitted! You’ll get a confirmation shortly.');
         const newCart = await fetchCart();
         setCart(newCart);
+        setShowOrderForm(false);
+        setCustomerName('');
+        setCustomerEmail('');
+        setCustomerPhone('');
       } else {
-        const errorData = await response.json();
-        setCheckoutError(errorData.detail || 'Checkout failed');
-        showToast(errorData.detail || 'Checkout failed', 'error');
+        const error = await response.json();
+        toast.error(error.error || 'Failed to submit order');
       }
-    } catch (error) {
-      setCheckoutError('Checkout request failed');
-      showToast('Checkout request failed', 'error');
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong while submitting the order');
     } finally {
-      setCheckoutLoading(false);
+      setOrderSubmitting(false);
     }
   };
 
@@ -244,7 +250,7 @@ const handleAdd = (product) => {
       <NavigationMenu />
       <main className="flex-grow">
         <FadeInWrapper className="max-w-5xl mx-auto px-6 py-16">
-          <h1 className="text-4xl font-semibold text-center mt-10 mb-8">Studio 1510 Shop</h1>
+          <h1 className="text-4xl font-semibold text-center mt-10 mb-8">Studio 1510 Products</h1>
 
           <div className="flex justify-end mb-4">
             <button
@@ -258,8 +264,6 @@ const handleAdd = (product) => {
                   {cart?.items?.length || 0}
                 </span>
               )}
-
-
             </button>
           </div>
 
@@ -268,7 +272,7 @@ const handleAdd = (product) => {
           </p>
 
           <div>
-            <h2 className="text-3xl font-semibold mb-6 text-center">Products</h2>
+            {/* <h2 className="text-3xl font-semibold mb-6 text-center">Products</h2> */}
             <input
               type="text"
               placeholder="Search products..."
@@ -306,7 +310,7 @@ const handleAdd = (product) => {
                         onClick={() => handleAdd(product)}
                         className="mt-2 px-4 py-2 bg-[#333333] text-white rounded hover:bg-gray-700 transition w-full"
                       >
-                        Add to Cart
+                        Place your Order
                       </button>
                     ) : (
                       <button
@@ -361,8 +365,7 @@ const handleAdd = (product) => {
                 {cart.items && cart.items.map((item, index) => {
                   if (!item.product) {
                     console.warn("Cart item missing product data:", item);
-                    return null; // Skip rendering this broken item
-                  }
+                    return null;                  }
 
                   return (
                     <li key={index} className="mb-4 border-b pb-2">
@@ -403,16 +406,15 @@ const handleAdd = (product) => {
                   </p>
                 </div>
 
-                <button
-                  className={`mt-4 px-4 py-2 bg-[#333333] hover:bg-gray-700 text-white rounded transition w-full ${
-                    checkoutLoading ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
-                  onClick={handleCheckout}
-                  disabled={checkoutLoading}
+               <button
+                  onClick={() => {
+                    setShowOrderForm(true);
+                    closeCart();
+                  }}
+                  className="mt-4 px-4 py-2 bg-[#333333] hover:bg-gray-700 text-white rounded transition w-full"
                 >
-                  {checkoutLoading ? 'Processing...' : 'Checkout'}
+                  Proceed to Order
                 </button>
-
 
                 <button
                   className="mt-2 text-sm text-red-500 underline hover:text-red-600 transition w-full"
@@ -425,6 +427,54 @@ const handleAdd = (product) => {
           </div>
         </>
       )}
+
+      {showOrderForm && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+        <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+          <h2 className="text-xl font-semibold mb-4">Complete Your Order</h2>
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+            required
+            autoFocus
+          />
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={customerEmail}
+            onChange={(e) => setCustomerEmail(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+            required
+          />
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={customerPhone}
+            onChange={(e) => setCustomerPhone(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+            required
+          />
+          <button
+            onClick={handlePlaceOrder}
+            className="w-full py-2 bg-[#333333] text-white rounded hover:bg-gray-700 transition mb-2"
+            disabled={orderSubmitting}
+          >
+            {orderSubmitting ? 'Placing Order...' : 'Submit Order'}
+          </button>
+          <button
+            onClick={() => setShowOrderForm(false)}
+            className="w-full py-2 text-sm text-gray-500 hover:underline"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    )}
+
+
 
       {modalVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-center items-center">
